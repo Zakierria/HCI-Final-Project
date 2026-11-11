@@ -19,78 +19,56 @@
 
   <main id="main" class="page-shell">
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">WAYFINDING <span> / </span> MAIN Screen</p>
-      <h1 id="page-title">Find a room</h1>
-      <p class="intro-copy">Search for a department, care team, or room number.</p>
+      <p class="eyebrow">WAYPOINT <span> / </span> HOSPITAL GUIDE</p>
+      <h1 id="page-title">Where do you need to go?</h1>
+      <p class="intro-copy">Choose a destination to see directions from the main lobby.</p>
     </section>
 
-    <section class="locator" aria-label="Hospital room locator">
-      <aside class="search-panel" aria-label="Search destinations">
-        <form class="search-form" role="search" onsubmit="return false">
-          <label for="destination-search">Destination</label>
-          <div class="search-box">
-            <span class="search-symbol" aria-hidden="true"></span>
-            <input id="destination-search" type="search" placeholder="Try ‘Cardiology’ or ‘214’" autocomplete="off">
-            <button id="clear-search" class="clear-search" type="button" aria-label="Clear search" hidden>&times;</button>
-          </div>
-        </form>
-
-        <div class="filter-row">
-          <label for="department-filter">Department</label>
-          <select id="department-filter" aria-label="Filter by department">
-            <option value="all">All departments</option>
-          </select>
-        </div>
-
-        <div class="results-heading">
-          <h2>Destinations</h2>
-          <span id="result-count" class="result-count" aria-live="polite"></span>
-        </div>
-        <div id="destination-list" class="destination-list"></div>
-        <p id="empty-state" class="empty-state" hidden>No destinations match. Try another search.</p>
+    <section class="journey" aria-label="Neurology directions">
+      <div id="destination-screen" class="destination-screen">
+        <p class="screen-label">DESTINATION</p>
+        <h2>Hospital departments</h2>
+        <button id="start-route" class="destination-choice" type="button" aria-label="Get directions to Neurology, room 238, level 2">
+          <span class="destination-symbol" aria-hidden="true">N</span>
+          <span class="destination-copy">
+            <span class="destination-name">Neurology</span>
+            <span class="destination-meta">Neurosciences · Level 2</span>
+          </span>
+          <span class="destination-room">238</span>
+          <span class="destination-arrow" aria-hidden="true">&#8594;</span>
+        </button>
         <p class="help-note"><span aria-hidden="true">i</span> For urgent assistance, please ask a staff member.</p>
-      </aside>
+      </div>
 
-      <section class="map-panel" aria-label="Floor map">
-        <div class="map-toolbar">
+      <section id="route-screen" class="route-screen" aria-labelledby="route-title" hidden>
+        <button id="back-to-destinations" class="text-button" type="button">&#8592; All destinations</button>
+        <div class="route-heading">
           <div>
-            <p class="map-kicker">WAYPOINT PATHFINDER</p>
-            <h2 id="map-title">Level 1 <span>·</span> Main lobby</h2>
+            <p class="screen-label">YOUR ROUTE</p>
+            <h2 id="route-title">Neurology</h2>
           </div>
-          <div class="floor-switch" role="group" aria-label="Choose floor">
-            <button type="button" data-floor="1" aria-pressed="true">1</button>
-            <button type="button" data-floor="2" aria-pressed="false">2</button>
-            <button type="button" data-floor="3" aria-pressed="false">3</button>
-          </div>
+          <span class="route-room">ROOM 238</span>
         </div>
-
-        <div id="map" class="map-canvas" aria-label="Schematic map of level 1">
-          <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
-          <div class="map-wing wing-north"><span>CARE WING</span></div>
-          <div class="map-wing wing-east"><span>OUTPATIENT</span></div>
-          <div class="map-wing wing-south"><span>IMAGING</span></div>
-          <div class="map-wing wing-west"><span>MAIN LOBBY</span></div>
-          <div class="map-corridor corridor-horizontal"></div>
-          <div class="map-corridor corridor-vertical"></div>
-          <div class="map-node node-lobby">LOBBY</div>
-          <div class="map-node node-elevators">ELEVATORS</div>
-          <div class="map-node node-info">INFO DESK</div>
-          <div id="room-marker" class="room-marker" hidden><span class="marker-pulse"></span><span class="marker-label"></span></div>
-          <div class="map-scale"><span></span> Schematic map · Not to scale</div>
+        <div class="route-progress" aria-label="Route progress">
+          <div class="progress-copy"><span id="step-count">Step 1 of 3</span><span id="step-floor">LEVEL 1</span></div>
+          <div class="progress-track"><span id="progress-fill"></span></div>
         </div>
-
-        <div id="selection-panel" class="selection-panel" aria-live="polite">
-          <div class="selection-icon" aria-hidden="true">+</div>
-          <div class="selection-copy">
-            <p class="selection-label">SELECT A DESTINATION</p>
-            <p id="selection-name" class="selection-name">Choose a room from the list</p>
-            <p id="selection-detail" class="selection-detail">Its location will appear on the floor map.</p>
+        <article class="step-card" aria-live="polite" aria-atomic="true">
+          <div class="step-number" id="step-number">01</div>
+          <div class="step-content">
+            <p class="step-kicker" id="step-kicker">START HERE</p>
+            <h3 id="step-title">Find the elevators</h3>
+            <p id="step-description">From the main lobby, walk toward the information desk. The elevators are just beyond it.</p>
+            <p class="step-landmark"><span aria-hidden="true">&#9679;</span><span id="step-landmark">Main lobby</span></p>
           </div>
-          <span id="selection-room" class="room-tag" hidden></span>
+        </article>
+        <div class="route-controls">
+          <button id="previous-step" class="back-button" type="button" disabled>&#8592; Back</button>
+          <button id="next-step" class="next-button" type="button">Next step <span aria-hidden="true">&#8594;</span></button>
         </div>
       </section>
     </section>
-    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask any team member for help finding your way.</span></footer>
+    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Directions begin at the main lobby.</span></footer>
   </main>
 </body>
 </html>

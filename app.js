@@ -1,119 +1,86 @@
-const destinations = [
-  { name: 'Cardiology', department: 'Heart & Vascular', room: '214', floor: 2, wing: 'North Care Wing', position: { left: '50%', top: '26%' } },
-  { name: 'Diagnostic Imaging', department: 'Imaging & Radiology', room: '108', floor: 1, wing: 'Imaging Wing', position: { left: '51%', top: '76%' } },
-  { name: 'Emergency Department', department: 'Emergency Care', room: 'ED', floor: 1, wing: 'East Outpatient Wing', position: { left: '78%', top: '42%' } },
-  { name: 'Family Medicine', department: 'Primary Care', room: '126', floor: 1, wing: 'East Outpatient Wing', position: { left: '73%', top: '51%' } },
-  { name: 'Laboratory', department: 'Lab Services', room: '142', floor: 1, wing: 'East Outpatient Wing', position: { left: '77%', top: '61%' } },
-  { name: 'Maternity & Birth Center', department: 'Women & Infants', room: '322', floor: 3, wing: 'North Care Wing', position: { left: '51%', top: '26%' } },
-  { name: 'Neurology', department: 'Neurosciences', room: '238', floor: 2, wing: 'East Outpatient Wing', position: { left: '77%', top: '54%' } },
-  { name: 'Pediatrics', department: 'Children’s Health', room: '205', floor: 2, wing: 'West Care Wing', position: { left: '22%', top: '49%' } },
-  { name: 'Pharmacy', department: 'Visitor Services', room: '116', floor: 1, wing: 'Main Lobby', position: { left: '20%', top: '64%' } },
-  { name: 'Physical Therapy', department: 'Rehabilitation', room: '306', floor: 3, wing: 'South Care Wing', position: { left: '51%', top: '75%' } },
-  { name: 'Surgery Check-in', department: 'Surgical Services', room: '248', floor: 2, wing: 'East Outpatient Wing', position: { left: '77%', top: '54%' } }
+const routeSteps = [
+  {
+    floor: 'LEVEL 1',
+    kicker: 'START HERE',
+    title: 'Find the elevators',
+    description: 'From the main lobby, walk toward the information desk. The elevators are just beyond it.',
+    landmark: 'Main lobby'
+  },
+  {
+    floor: 'LEVEL 2',
+    kicker: 'GO TO LEVEL 2',
+    title: 'Take the elevator up',
+    description: 'Take an elevator to Level 2. When you exit, turn right toward the East Outpatient Wing.',
+    landmark: 'Level 2 elevators'
+  },
+  {
+    floor: 'LEVEL 2',
+    kicker: 'ALMOST THERE',
+    title: 'Continue to Neurology',
+    description: 'Follow the Neurosciences signs to room 238. Ask the reception desk if you need help finding the room.',
+    landmark: 'East Outpatient Wing'
+  }
 ];
 
-const searchInput = document.querySelector('#destination-search');
-const clearButton = document.querySelector('#clear-search');
-const departmentFilter = document.querySelector('#department-filter');
-const destinationList = document.querySelector('#destination-list');
-const resultCount = document.querySelector('#result-count');
-const emptyState = document.querySelector('#empty-state');
-const roomMarker = document.querySelector('#room-marker');
-const map = document.querySelector('#map');
-const mapTitle = document.querySelector('#map-title');
-const selectionName = document.querySelector('#selection-name');
-const selectionDetail = document.querySelector('#selection-detail');
-const selectionRoom = document.querySelector('#selection-room');
-let activeFloor = 1;
-let selectedRoom = null;
+const destinationScreen = document.querySelector('#destination-screen');
+const routeScreen = document.querySelector('#route-screen');
+const startRouteButton = document.querySelector('#start-route');
+const backToDestinationsButton = document.querySelector('#back-to-destinations');
+const previousStepButton = document.querySelector('#previous-step');
+const nextStepButton = document.querySelector('#next-step');
+const stepCount = document.querySelector('#step-count');
+const stepFloor = document.querySelector('#step-floor');
+const progressFill = document.querySelector('#progress-fill');
+const stepNumber = document.querySelector('#step-number');
+const stepKicker = document.querySelector('#step-kicker');
+const stepTitle = document.querySelector('#step-title');
+const stepDescription = document.querySelector('#step-description');
+const stepLandmark = document.querySelector('#step-landmark');
+let currentStep = 0;
 
-const departments = [...new Set(destinations.map((destination) => destination.department))].sort();
-for (const department of departments) {
-  const option = document.createElement('option');
-  option.value = department;
-  option.textContent = department;
-  departmentFilter.append(option);
+function renderStep() {
+  const step = routeSteps[currentStep];
+  stepCount.textContent = `Step ${currentStep + 1} of ${routeSteps.length}`;
+  stepFloor.textContent = step.floor;
+  progressFill.style.width = `${((currentStep + 1) / routeSteps.length) * 100}%`;
+  stepNumber.textContent = String(currentStep + 1).padStart(2, '0');
+  stepKicker.textContent = step.kicker;
+  stepTitle.textContent = step.title;
+  stepDescription.textContent = step.description;
+  stepLandmark.textContent = step.landmark;
+  previousStepButton.disabled = currentStep === 0;
+
+  const isLastStep = currentStep === routeSteps.length - 1;
+  nextStepButton.innerHTML = isLastStep ? 'Finish route <span aria-hidden="true">&#10003;</span>' : 'Next step <span aria-hidden="true">&#8594;</span>';
 }
 
-function renderDestinations() {
-  const query = searchInput.value.trim().toLocaleLowerCase();
-  const department = departmentFilter.value;
-  const matches = destinations.filter((destination) => {
-    const searchable = `${destination.name} ${destination.department} ${destination.room} ${destination.wing}`.toLocaleLowerCase();
-    return searchable.includes(query) && (department === 'all' || destination.department === department);
-  });
-
-  destinationList.replaceChildren();
-  for (const destination of matches) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'destination-item';
-    button.setAttribute('aria-pressed', String(selectedRoom === destination));
-
-    const details = document.createElement('span');
-    const name = document.createElement('span');
-    name.className = 'destination-name';
-    name.textContent = destination.name;
-    const meta = document.createElement('span');
-    meta.className = 'destination-meta';
-    meta.textContent = `${destination.department} · Level ${destination.floor}`;
-    details.append(name, meta);
-
-    const room = document.createElement('span');
-    room.className = 'destination-room';
-    room.textContent = destination.room;
-    button.append(details, room);
-    button.addEventListener('click', () => selectDestination(destination));
-    destinationList.append(button);
-  }
-
-  resultCount.textContent = `${matches.length} ${matches.length === 1 ? 'result' : 'results'}`;
-  emptyState.hidden = matches.length > 0;
-  clearButton.hidden = searchInput.value.length === 0;
+function showDestinations() {
+  routeScreen.hidden = true;
+  destinationScreen.hidden = false;
+  currentStep = 0;
 }
 
-function selectDestination(destination) {
-  selectedRoom = destination;
-  if (activeFloor !== destination.floor) setFloor(destination.floor);
-  roomMarker.hidden = false;
-  roomMarker.style.left = destination.position.left;
-  roomMarker.style.top = destination.position.top;
-  roomMarker.querySelector('.marker-label').textContent = destination.name;
-  map.setAttribute('aria-label', `Schematic map of level ${destination.floor}, selected location ${destination.name}, room ${destination.room}`);
-  selectionName.textContent = destination.name;
-  selectionDetail.textContent = `${destination.wing} · Level ${destination.floor}`;
-  selectionRoom.textContent = `Room ${destination.room}`;
-  selectionRoom.hidden = false;
-  renderDestinations();
-}
-
-function setFloor(floor) {
-  activeFloor = floor;
-  const floorNames = { 1: 'Main lobby', 2: 'Inpatient care', 3: 'Specialty care' };
-  mapTitle.innerHTML = `Level ${floor} <span>·</span> ${floorNames[floor]}`;
-  map.setAttribute('aria-label', `Schematic map of level ${floor}`);
-  document.querySelectorAll('.floor-switch button').forEach((button) => {
-    button.setAttribute('aria-pressed', String(Number(button.dataset.floor) === floor));
-  });
-  if (!selectedRoom || selectedRoom.floor !== floor) {
-    roomMarker.hidden = true;
-    selectionName.textContent = 'Choose a room from the list';
-    selectionDetail.textContent = 'Its location will appear on the floor map.';
-    selectionRoom.hidden = true;
-    selectedRoom = null;
-  }
-  renderDestinations();
-}
-
-searchInput.addEventListener('input', renderDestinations);
-departmentFilter.addEventListener('change', renderDestinations);
-clearButton.addEventListener('click', () => {
-  searchInput.value = '';
-  searchInput.focus();
-  renderDestinations();
-});
-document.querySelectorAll('.floor-switch button').forEach((button) => {
-  button.addEventListener('click', () => setFloor(Number(button.dataset.floor)));
+startRouteButton.addEventListener('click', () => {
+  destinationScreen.hidden = true;
+  routeScreen.hidden = false;
+  currentStep = 0;
+  renderStep();
+  backToDestinationsButton.focus();
 });
 
-renderDestinations();
+backToDestinationsButton.addEventListener('click', showDestinations);
+previousStepButton.addEventListener('click', () => {
+  if (currentStep > 0) {
+    currentStep -= 1;
+    renderStep();
+  }
+});
+nextStepButton.addEventListener('click', () => {
+  if (currentStep < routeSteps.length - 1) {
+    currentStep += 1;
+    renderStep();
+  } else {
+    showDestinations();
+    startRouteButton.focus();
+  }
+});
