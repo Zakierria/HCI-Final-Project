@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f7f5">
-  <title>WayPoint</title>
+  <title>FindMyWay</title>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#main" aria-label="WayPoint | PathFinder">
+    <a class="brand" href="#main" aria-label="FindMyWay">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-name">WayPoint <span>PathFinder</span></span>
+      <span class="brand-name">FindMyWay</span>
     </a>
     <div class="topbar-note"><span class="status-dot" aria-hidden="true"></span> Patient & visitor guide</div>
   </header>
 
   <main id="main" class="page-shell">
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">WAYPOINT <span> / </span> HOSPITAL GUIDE</p>
+      <p class="eyebrow">FINDMYWAY <span> / </span> HOSPITAL GUIDE</p>
       <h1 id="page-title">Find your way</h1>
       <p class="intro-copy">Choose a department or location to get started.</p>
     </section>
@@ -88,6 +88,10 @@
           </div>
           <span class="route-room">LEVEL 3 · ROOM 326</span>
         </div>
+        <button id="open-lost-dialog" class="lost-button" type="button">
+          <span aria-hidden="true">&#9635;</span>
+          <span class="lost-button-copy"><strong>I'm lost</strong><small>Scan a location QR code for directions from where you are</small></span>
+        </button>
 
         <article id="checkin-screen" class="step-card checkin-card" aria-live="polite">
           <div class="step-number" aria-hidden="true">&#9679;</div>
@@ -127,7 +131,7 @@
         <button id="done-button" class="next-button" type="button">Done</button>
       </section>
     </section>
-    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask any team member if you need help finding your way.</span></footer>
+    <footer class="page-footer"><span>FindMyWay</span><span>Ask any team member if you need help finding your way.</span></footer>
   </main>
 
   <dialog id="route-dialog" class="route-dialog" aria-labelledby="dialog-title">
@@ -138,6 +142,27 @@
     <div class="dialog-actions">
       <button id="cancel-route" class="back-button" type="button">Not yet</button>
       <button id="begin-route" class="next-button" type="button">Start route <span aria-hidden="true">&#8594;</span></button>
+    </div>
+  </dialog>
+
+  <dialog id="lost-dialog" class="route-dialog lost-dialog" aria-labelledby="lost-dialog-title">
+    <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close scanner">&times;</button></form>
+    <p class="screen-label">LOCATION SCANNER</p>
+    <h2 id="lost-dialog-title">Let's find where you are</h2>
+    <p>Scan a FindMyWay QR code nearby to get directions to Neurology from your current location.</p>
+    <div class="scanner-preview" role="img" aria-label="QR code scanner preview illustration">
+      <span class="scanner-corner scanner-corner-top-left" aria-hidden="true"></span>
+      <span class="scanner-corner scanner-corner-top-right" aria-hidden="true"></span>
+      <span class="scanner-corner scanner-corner-bottom-left" aria-hidden="true"></span>
+      <span class="scanner-corner scanner-corner-bottom-right" aria-hidden="true"></span>
+      <svg class="scanner-code" viewBox="0 0 84 84" aria-hidden="true">
+        <rect width="84" height="84" rx="4" fill="#fff"/>
+        <path fill="#23332d" d="M5 5h24v24H5zm5 5v14h14V10zm3 3h8v8h-8zM55 5h24v24H55zm5 5v14h14V10zm3 3h8v8h-8zM5 55h24v24H5zm5 5v14h14V60zm3 3h8v8h-8zM35 5h6v6h-6zm8 0h6v6h-6zm-8 9h6v6h-6zm8 8h6v6h-6zm-8 8h6v6h-6zm8 0h6v6h-6zm10 0h6v6h-6zm8 0h6v6h-6zm8 0h6v6h-6zM35 38h6v6h-6zm8 0h6v6h-6zm16 0h6v6h-6zm8 0h6v6h-6zm-32 8h6v6h-6zm8 0h6v6h-6zm8 0h6v6h-6zm8 0h6v6h-6zm16 0h6v6h-6zm-32 9h6v6h-6zm8 0h6v6h-6zm16 0h6v6h-6zm8 0h6v6h-6zm-24 8h6v6h-6zm8 0h6v6h-6zm16 0h6v6h-6zm-24 8h6v6h-6zm16 0h6v6h-6zm8 0h6v6h-6z"/>
+      </svg>
+    </div>
+    <p class="scanner-note"><strong>Scanner preview</strong> — camera scanning isn't connected in this demo.</p>
+    <div class="dialog-actions">
+      <button id="close-lost-dialog" class="back-button" type="button">Back to directions</button>
     </div>
   </dialog>
 </body>

@@ -19,6 +19,7 @@ const neurologyScreen = document.querySelector('#neurology-screen');
 const routeScreen = document.querySelector('#route-screen');
 const arrivalScreen = document.querySelector('#arrival-screen');
 const routeDialog = document.querySelector('#route-dialog');
+const lostDialog = document.querySelector('#lost-dialog');
 const checkinScreen = document.querySelector('#checkin-screen');
 const directionsScreen = document.querySelector('#directions-screen');
 const directionCount = document.querySelector('#step-count');
@@ -69,6 +70,8 @@ document.querySelector('#open-route-dialog').addEventListener('click', () => rou
 document.querySelector('#cancel-route').addEventListener('click', () => routeDialog.close());
 document.querySelector('#begin-route').addEventListener('click', startRoute);
 document.querySelector('#exit-route').addEventListener('click', () => showScreen(neurologyScreen));
+document.querySelector('#open-lost-dialog').addEventListener('click', () => lostDialog.showModal());
+document.querySelector('#close-lost-dialog').addEventListener('click', () => lostDialog.close());
 
 document.querySelector('#checkin-button').addEventListener('click', () => {
   currentStep = 0;
