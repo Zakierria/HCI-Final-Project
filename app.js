@@ -1,86 +1,98 @@
 const routeSteps = [
   {
-    floor: 'LEVEL 1',
-    kicker: 'START HERE',
-    title: 'Find the elevators',
-    description: 'From the main lobby, walk toward the information desk. The elevators are just beyond it.',
-    landmark: 'Main lobby'
+    title: 'Take a right and get on the elevator to floor 3.',
+    description: 'Follow the signs for the elevators and select Level 3.'
   },
   {
-    floor: 'LEVEL 2',
-    kicker: 'GO TO LEVEL 2',
-    title: 'Take the elevator up',
-    description: 'Take an elevator to Level 2. When you exit, turn right toward the East Outpatient Wing.',
-    landmark: 'Level 2 elevators'
+    title: 'Take a left.',
+    description: 'When you exit the elevator on Level 3, turn left and continue down the hallway.'
   },
   {
-    floor: 'LEVEL 2',
-    kicker: 'ALMOST THERE',
-    title: 'Continue to Neurology',
-    description: 'Follow the Neurosciences signs to room 238. Ask the reception desk if you need help finding the room.',
-    landmark: 'East Outpatient Wing'
+    title: 'Take a right.',
+    description: 'Turn right at the end of the hallway. The Neurology front desk is just ahead.'
   }
 ];
 
-const destinationScreen = document.querySelector('#destination-screen');
+const homeScreen = document.querySelector('#home-screen');
+const departmentsScreen = document.querySelector('#departments-screen');
+const neurologyScreen = document.querySelector('#neurology-screen');
 const routeScreen = document.querySelector('#route-screen');
-const startRouteButton = document.querySelector('#start-route');
-const backToDestinationsButton = document.querySelector('#back-to-destinations');
-const previousStepButton = document.querySelector('#previous-step');
-const nextStepButton = document.querySelector('#next-step');
-const stepCount = document.querySelector('#step-count');
-const stepFloor = document.querySelector('#step-floor');
+const arrivalScreen = document.querySelector('#arrival-screen');
+const routeDialog = document.querySelector('#route-dialog');
+const checkinScreen = document.querySelector('#checkin-screen');
+const directionsScreen = document.querySelector('#directions-screen');
+const directionCount = document.querySelector('#step-count');
 const progressFill = document.querySelector('#progress-fill');
 const stepNumber = document.querySelector('#step-number');
-const stepKicker = document.querySelector('#step-kicker');
 const stepTitle = document.querySelector('#step-title');
 const stepDescription = document.querySelector('#step-description');
-const stepLandmark = document.querySelector('#step-landmark');
+const previousStepButton = document.querySelector('#previous-step');
+const nextStepButton = document.querySelector('#next-step');
 let currentStep = 0;
+
+const screens = [homeScreen, departmentsScreen, neurologyScreen, routeScreen, arrivalScreen];
+
+function showScreen(activeScreen) {
+  screens.forEach((screen) => {
+    screen.hidden = screen !== activeScreen;
+  });
+}
 
 function renderStep() {
   const step = routeSteps[currentStep];
-  stepCount.textContent = `Step ${currentStep + 1} of ${routeSteps.length}`;
-  stepFloor.textContent = step.floor;
+  directionCount.textContent = `Step ${currentStep + 1} of ${routeSteps.length}`;
   progressFill.style.width = `${((currentStep + 1) / routeSteps.length) * 100}%`;
   stepNumber.textContent = String(currentStep + 1).padStart(2, '0');
-  stepKicker.textContent = step.kicker;
   stepTitle.textContent = step.title;
   stepDescription.textContent = step.description;
-  stepLandmark.textContent = step.landmark;
   previousStepButton.disabled = currentStep === 0;
-
-  const isLastStep = currentStep === routeSteps.length - 1;
-  nextStepButton.innerHTML = isLastStep ? 'Finish route <span aria-hidden="true">&#10003;</span>' : 'Next step <span aria-hidden="true">&#8594;</span>';
+  nextStepButton.innerHTML = currentStep === routeSteps.length - 1
+    ? "I'm here"
+    : 'Done, next step <span aria-hidden="true">&#8594;</span>';
 }
 
-function showDestinations() {
-  routeScreen.hidden = true;
-  destinationScreen.hidden = false;
+function startRoute() {
+  routeDialog.close();
   currentStep = 0;
+  checkinScreen.hidden = false;
+  directionsScreen.hidden = true;
+  showScreen(routeScreen);
+  document.querySelector('#checkin-button').focus();
 }
 
-startRouteButton.addEventListener('click', () => {
-  destinationScreen.hidden = true;
-  routeScreen.hidden = false;
+document.querySelector('.brand').addEventListener('click', () => showScreen(homeScreen));
+document.querySelector('#open-departments').addEventListener('click', () => showScreen(departmentsScreen));
+document.querySelector('#departments-home').addEventListener('click', () => showScreen(homeScreen));
+document.querySelector('[data-department="Neurology"]').addEventListener('click', () => showScreen(neurologyScreen));
+document.querySelector('#detail-back').addEventListener('click', () => showScreen(departmentsScreen));
+document.querySelector('#open-route-dialog').addEventListener('click', () => routeDialog.showModal());
+document.querySelector('#cancel-route').addEventListener('click', () => routeDialog.close());
+document.querySelector('#begin-route').addEventListener('click', startRoute);
+document.querySelector('#exit-route').addEventListener('click', () => showScreen(neurologyScreen));
+
+document.querySelector('#checkin-button').addEventListener('click', () => {
   currentStep = 0;
   renderStep();
-  backToDestinationsButton.focus();
+  checkinScreen.hidden = true;
+  directionsScreen.hidden = false;
+  nextStepButton.focus();
 });
 
-backToDestinationsButton.addEventListener('click', showDestinations);
 previousStepButton.addEventListener('click', () => {
   if (currentStep > 0) {
     currentStep -= 1;
     renderStep();
   }
 });
+
 nextStepButton.addEventListener('click', () => {
   if (currentStep < routeSteps.length - 1) {
     currentStep += 1;
     renderStep();
   } else {
-    showDestinations();
-    startRouteButton.focus();
+    showScreen(arrivalScreen);
+    document.querySelector('#done-button').focus();
   }
 });
+
+document.querySelector('#done-button').addEventListener('click', () => showScreen(homeScreen));

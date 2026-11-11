@@ -138,6 +138,73 @@ h1 { margin: 8px 0 7px; font: 800 36px/1.15 'DM Sans', 'Segoe UI', sans-serif; l
 .page-footer { display: flex; justify-content: space-between; gap: 16px; padding: 16px 2px 0; color: #89958f; font-size: 10px; }
 .page-footer span:first-child { color: #6d7b74; font-weight: 650; }
 
+.journey-screen { padding: 30px 34px 26px; }
+.journey-screen[hidden], #directions-screen[hidden] { display: none; }
+.home-screen h2, .screen-heading h2, .arrival-screen h2 { margin: 8px 0 8px; font-size: 21px; font-weight: 750; }
+.screen-description { margin: 0; color: #687670; font-size: 13px; line-height: 1.65; }
+.home-choice {
+  width: 100%;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 25px;
+  padding: 14px 16px;
+  border: 1px solid #dfe8e2;
+  border-radius: 6px;
+  color: var(--ink);
+  text-align: left;
+  background: #fff;
+  transition: border-color .18s, background .18s, transform .18s;
+}
+.home-choice:hover { transform: translateY(-2px); border-color: #9dc7ae; background: #f8fbf8; }
+.home-choice-icon { width: 40px; height: 40px; flex: 0 0 40px; display: grid; place-items: center; border-radius: 50%; color: var(--green-dark); background: var(--mint); font-size: 23px; font-weight: 400; }
+.home-choice strong, .home-choice small { display: block; }
+.home-choice strong { font-size: 13px; }
+.home-choice small { margin-top: 5px; color: #829089; font-size: 10px; }
+.home-choice .destination-arrow { margin-left: auto; }
+.home-screen .help-note { margin-top: 25px; }
+
+.department-screen { padding-top: 21px; }
+.screen-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 21px 0 13px; }
+.screen-heading h2 { margin: 7px 0 0; font-size: 20px; }
+.directory-count { padding-bottom: 2px; color: #89958f; font-size: 10px; white-space: nowrap; }
+.department-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; border-top: 1px solid #e8eeea; }
+.department-choice { min-width: 0; min-height: 63px; display: flex; align-items: center; gap: 11px; padding: 8px 5px; border: 0; border-bottom: 1px solid #e8eeea; color: var(--ink); text-align: left; background: transparent; }
+button.department-choice { width: 100%; cursor: pointer; transition: background .16s; }
+button.department-choice:hover { background: #f4f8f5; }
+.department-initial { width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; border-radius: 50%; color: #527262; background: #edf4ef; font-size: 11px; font-weight: 800; }
+.department-copy { min-width: 0; flex: 1; }
+.department-copy strong, .department-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.department-copy strong { color: #34443d; font-size: 11px; font-weight: 750; }
+.department-copy small { margin-top: 4px; color: #89958f; font-size: 9px; }
+.availability { color: #a0aaa4; font-size: 9px; white-space: nowrap; }
+.department-choice .destination-arrow { margin-left: 0; font-size: 16px; }
+
+.detail-screen { padding-top: 21px; }
+.detail-screen .route-heading { margin-top: 27px; }
+.detail-screen .route-heading h2 { font-size: 25px; }
+.detail-description { max-width: 520px; margin: 16px 0 20px; color: #687670; font-size: 13px; line-height: 1.7; }
+.detail-info { display: flex; align-items: baseline; gap: 9px; padding: 14px 0; border-top: 1px solid #e8eeea; border-bottom: 1px solid #e8eeea; }
+.detail-info span { margin-right: 3px; color: #89958f; font-size: 9px; font-weight: 800; letter-spacing: .6px; }
+.detail-info strong { margin-right: 18px; color: #34443d; font-size: 12px; }
+.detail-route-button { margin-top: 21px; }
+.checkin-card .step-content > p:not(.step-kicker):not(.step-landmark) { margin-bottom: 17px; }
+.checkin-card .next-button { min-width: 115px; }
+.arrival-screen { min-height: 330px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.arrival-mark { width: 48px; height: 48px; display: grid; place-items: center; margin-bottom: 22px; border-radius: 50%; color: var(--green-dark); background: var(--mint); font-size: 23px; font-weight: 700; }
+.arrival-screen h2 { margin: 9px 0 8px; }
+.arrival-screen .next-button { min-width: 94px; margin-top: 22px; }
+
+.route-dialog { position: relative; width: min(440px, calc(100% - 32px)); padding: 30px; border: 1px solid #dfe8e2; border-radius: 8px; color: var(--ink); background: #fff; box-shadow: 0 22px 70px rgba(27, 47, 37, .22); }
+.route-dialog::backdrop { background: rgba(25, 40, 33, .42); backdrop-filter: blur(2px); }
+.route-dialog h2 { margin: 9px 26px 8px 0; font-size: 21px; }
+.route-dialog > p:not(.screen-label) { margin: 0; color: #687670; font-size: 13px; line-height: 1.65; }
+.dialog-close-form { position: absolute; top: 13px; right: 13px; }
+.dialog-close { width: 30px; height: 30px; border: 0; border-radius: 50%; color: #74817a; background: #f2f6f3; font-size: 20px; line-height: 1; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 24px; }
+.dialog-actions .next-button { min-width: 124px; }
+
 @keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 600px) {
@@ -147,6 +214,12 @@ h1 { margin: 8px 0 7px; font: 800 36px/1.15 'DM Sans', 'Segoe UI', sans-serif; l
   .page-shell { width: min(100% - 32px, 480px); padding-top: 38px; }
   h1 { font-size: 30px; }
   .destination-screen { padding: 24px 19px 18px; }
+  .journey-screen { padding: 24px 19px 20px; }
+  .department-screen, .detail-screen { padding-top: 18px; }
+  .department-list { grid-template-columns: 1fr; }
+  .screen-heading h2 { font-size: 18px; }
+  .home-choice { gap: 10px; padding: 12px; }
+  .home-choice small { max-width: 220px; line-height: 1.4; }
   .route-screen { padding: 18px 19px 21px; }
   .step-card { grid-template-columns: 43px minmax(0, 1fr); gap: 13px; padding: 19px 15px; }
   .step-number { width: 42px; height: 42px; font-size: 13px; }
@@ -161,6 +234,9 @@ h1 { margin: 8px 0 7px; font: 800 36px/1.15 'DM Sans', 'Segoe UI', sans-serif; l
   .page-shell { width: calc(100% - 24px); }
   .route-room { padding: 6px 7px; font-size: 9px; }
   .destination-choice { gap: 10px; padding: 12px 10px; }
+  .journey-screen { padding-right: 15px; padding-left: 15px; }
+  .department-copy small { font-size: 8px; }
+  .availability { font-size: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

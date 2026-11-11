@@ -20,55 +20,125 @@
   <main id="main" class="page-shell">
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">WAYPOINT <span> / </span> HOSPITAL GUIDE</p>
-      <h1 id="page-title">Where do you need to go?</h1>
-      <p class="intro-copy">Choose a destination to see directions from the main lobby.</p>
+      <h1 id="page-title">Find your way</h1>
+      <p class="intro-copy">Choose a department or location to get started.</p>
     </section>
 
-    <section class="journey" aria-label="Neurology directions">
-      <div id="destination-screen" class="destination-screen">
-        <p class="screen-label">DESTINATION</p>
-        <h2>Hospital departments</h2>
-        <button id="start-route" class="destination-choice" type="button" aria-label="Get directions to Neurology, room 238, level 2">
-          <span class="destination-symbol" aria-hidden="true">N</span>
-          <span class="destination-copy">
-            <span class="destination-name">Neurology</span>
-            <span class="destination-meta">Neurosciences · Level 2</span>
-          </span>
-          <span class="destination-room">238</span>
+    <section class="journey" aria-label="Hospital wayfinding">
+      <section id="home-screen" class="journey-screen home-screen">
+        <p class="screen-label">WELCOME</p>
+        <h2>Where can we help you go?</h2>
+        <p class="screen-description">Browse hospital departments and locations.</p>
+        <button id="open-departments" class="home-choice" type="button">
+          <span class="home-choice-icon" aria-hidden="true">&#43;</span>
+          <span><strong>Departments &amp; Locations</strong><small>Browse services, floors, and room locations</small></span>
           <span class="destination-arrow" aria-hidden="true">&#8594;</span>
         </button>
         <p class="help-note"><span aria-hidden="true">i</span> For urgent assistance, please ask a staff member.</p>
       </div>
 
-      <section id="route-screen" class="route-screen" aria-labelledby="route-title" hidden>
-        <button id="back-to-destinations" class="text-button" type="button">&#8592; All destinations</button>
+      <section id="departments-screen" class="journey-screen department-screen" aria-labelledby="departments-title" hidden>
+        <button id="departments-home" class="text-button" type="button">&#8592; Home</button>
+        <div class="screen-heading">
+          <div>
+            <p class="screen-label">DIRECTORY</p>
+            <h2 id="departments-title">Departments &amp; Locations</h2>
+          </div>
+          <span class="directory-count">11 locations</span>
+        </div>
+        <div class="department-list">
+          <button class="department-choice" type="button" data-department="Neurology">
+            <span class="department-initial" aria-hidden="true">N</span>
+            <span class="department-copy"><strong>Neurology</strong><small>Neurosciences · Level 3 · Room 326</small></span>
+            <span class="destination-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">C</span><span class="department-copy"><strong>Cardiology</strong><small>Heart &amp; Vascular · Level 2</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">D</span><span class="department-copy"><strong>Diagnostic Imaging</strong><small>Imaging &amp; Radiology · Level 1</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">E</span><span class="department-copy"><strong>Emergency Department</strong><small>Emergency Care · Level 1</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">F</span><span class="department-copy"><strong>Family Medicine</strong><small>Primary Care · Level 1</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">L</span><span class="department-copy"><strong>Laboratory</strong><small>Lab Services · Level 1</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">M</span><span class="department-copy"><strong>Maternity &amp; Birth Center</strong><small>Women &amp; Infants · Level 3</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">P</span><span class="department-copy"><strong>Pediatrics</strong><small>Children's Health · Level 2</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">P</span><span class="department-copy"><strong>Pharmacy</strong><small>Visitor Services · Level 1</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">P</span><span class="department-copy"><strong>Physical Therapy</strong><small>Rehabilitation · Level 3</small></span><span class="availability">No route</span></div>
+          <div class="department-choice unavailable"><span class="department-initial" aria-hidden="true">S</span><span class="department-copy"><strong>Surgery Check-in</strong><small>Surgical Services · Level 2</small></span><span class="availability">No route</span></div>
+        </div>
+      </section>
+
+      <section id="neurology-screen" class="journey-screen detail-screen" aria-labelledby="neurology-title" hidden>
+        <button id="detail-back" class="text-button" type="button">&#8592; Departments &amp; Locations</button>
+        <div class="route-heading">
+          <div>
+            <p class="screen-label">DEPARTMENT</p>
+            <h2 id="neurology-title">Neurology</h2>
+          </div>
+          <span class="route-room">LEVEL 3 · ROOM 326</span>
+        </div>
+        <p class="detail-description">Neurology provides care for conditions affecting the brain and nervous system.</p>
+        <div class="detail-info"><span>FLOOR</span><strong>3</strong><span>ROOM</span><strong>326</strong></div>
+        <button id="open-route-dialog" class="next-button detail-route-button" type="button">Start route <span aria-hidden="true">&#8594;</span></button>
+      </section>
+
+      <section id="route-screen" class="journey-screen route-screen" aria-labelledby="route-title" hidden>
+        <button id="exit-route" class="text-button" type="button">&#8592; Neurology details</button>
         <div class="route-heading">
           <div>
             <p class="screen-label">YOUR ROUTE</p>
             <h2 id="route-title">Neurology</h2>
           </div>
-          <span class="route-room">ROOM 238</span>
+          <span class="route-room">LEVEL 3 · ROOM 326</span>
         </div>
-        <div class="route-progress" aria-label="Route progress">
-          <div class="progress-copy"><span id="step-count">Step 1 of 3</span><span id="step-floor">LEVEL 1</span></div>
-          <div class="progress-track"><span id="progress-fill"></span></div>
-        </div>
-        <article class="step-card" aria-live="polite" aria-atomic="true">
-          <div class="step-number" id="step-number">01</div>
+
+        <article id="checkin-screen" class="step-card checkin-card" aria-live="polite">
+          <div class="step-number" aria-hidden="true">&#9679;</div>
           <div class="step-content">
-            <p class="step-kicker" id="step-kicker">START HERE</p>
-            <h3 id="step-title">Find the elevators</h3>
-            <p id="step-description">From the main lobby, walk toward the information desk. The elevators are just beyond it.</p>
-            <p class="step-landmark"><span aria-hidden="true">&#9679;</span><span id="step-landmark">Main lobby</span></p>
+            <p class="step-kicker">START HERE</p>
+            <h3>Are you at the main lobby front desk?</h3>
+            <p>When you're at the main lobby front desk, tap below to begin your directions.</p>
+            <button id="checkin-button" class="next-button" type="button">I'm here <span aria-hidden="true">&#8594;</span></button>
           </div>
         </article>
-        <div class="route-controls">
-          <button id="previous-step" class="back-button" type="button" disabled>&#8592; Back</button>
-          <button id="next-step" class="next-button" type="button">Next step <span aria-hidden="true">&#8594;</span></button>
+
+        <div id="directions-screen" hidden>
+          <div class="route-progress" aria-label="Route progress">
+            <div class="progress-copy"><span id="step-count">Step 1 of 3</span><span>LEVEL 3</span></div>
+            <div class="progress-track"><span id="progress-fill"></span></div>
+          </div>
+          <article class="step-card" aria-live="polite" aria-atomic="true">
+            <div class="step-number" id="step-number">01</div>
+            <div class="step-content">
+              <p class="step-kicker">DIRECTION</p>
+              <h3 id="step-title">Take a right and get on the elevator to floor 3.</h3>
+              <p id="step-description">Follow the signs for the elevators and select Level 3.</p>
+            </div>
+          </article>
+          <div class="route-controls">
+            <button id="previous-step" class="back-button" type="button">&#8592; Back</button>
+            <button id="next-step" class="next-button" type="button">Done, next step <span aria-hidden="true">&#8594;</span></button>
+          </div>
         </div>
       </section>
+
+      <section id="arrival-screen" class="journey-screen arrival-screen" aria-labelledby="arrival-title" hidden>
+        <div class="arrival-mark" aria-hidden="true">&#10003;</div>
+        <p class="screen-label">DESTINATION REACHED</p>
+        <h2 id="arrival-title">You've arrived at Neurology</h2>
+        <p class="screen-description">You're at Level 3, Room 326. The front desk can help with check-in.</p>
+        <button id="done-button" class="next-button" type="button">Done</button>
+      </section>
     </section>
-    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Directions begin at the main lobby.</span></footer>
+    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask any team member if you need help finding your way.</span></footer>
   </main>
+
+  <dialog id="route-dialog" class="route-dialog" aria-labelledby="dialog-title">
+    <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close dialog">&times;</button></form>
+    <p class="screen-label">ROUTE PREVIEW</p>
+    <h2 id="dialog-title">Ready to go to Neurology?</h2>
+    <p>Directions will guide you to the front desk, then to Level 3, Room 326.</p>
+    <div class="dialog-actions">
+      <button id="cancel-route" class="back-button" type="button">Not yet</button>
+      <button id="begin-route" class="next-button" type="button">Start route <span aria-hidden="true">&#8594;</span></button>
+    </div>
+  </dialog>
 </body>
 </html>
