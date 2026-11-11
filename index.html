@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f5">
+  <title>WayPoint</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#main" aria-label="WayPoint | PathFinder">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">WayPoint <span>PathFinder</span></span>
+    </a>
+    <div class="topbar-note"><span class="status-dot" aria-hidden="true"></span> Patient & visitor guide</div>
+  </header>
+
+  <main id="main" class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">WAYFINDING <span> / </span> MAIN Screen</p>
+      <h1 id="page-title">Find a room</h1>
+      <p class="intro-copy">Search for a department, care team, or room number.</p>
+    </section>
+
+    <section class="locator" aria-label="Hospital room locator">
+      <aside class="search-panel" aria-label="Search destinations">
+        <form class="search-form" role="search" onsubmit="return false">
+          <label for="destination-search">Destination</label>
+          <div class="search-box">
+            <span class="search-symbol" aria-hidden="true"></span>
+            <input id="destination-search" type="search" placeholder="Try ‘Cardiology’ or ‘214’" autocomplete="off">
+            <button id="clear-search" class="clear-search" type="button" aria-label="Clear search" hidden>&times;</button>
+          </div>
+        </form>
+
+        <div class="filter-row">
+          <label for="department-filter">Department</label>
+          <select id="department-filter" aria-label="Filter by department">
+            <option value="all">All departments</option>
+          </select>
+        </div>
+
+        <div class="results-heading">
+          <h2>Destinations</h2>
+          <span id="result-count" class="result-count" aria-live="polite"></span>
+        </div>
+        <div id="destination-list" class="destination-list"></div>
+        <p id="empty-state" class="empty-state" hidden>No destinations match. Try another search.</p>
+        <p class="help-note"><span aria-hidden="true">i</span> For urgent assistance, please ask a staff member.</p>
+      </aside>
+
+      <section class="map-panel" aria-label="Floor map">
+        <div class="map-toolbar">
+          <div>
+            <p class="map-kicker">WAYPOINT PATHFINDER</p>
+            <h2 id="map-title">Level 1 <span>·</span> Main lobby</h2>
+          </div>
+          <div class="floor-switch" role="group" aria-label="Choose floor">
+            <button type="button" data-floor="1" aria-pressed="true">1</button>
+            <button type="button" data-floor="2" aria-pressed="false">2</button>
+            <button type="button" data-floor="3" aria-pressed="false">3</button>
+          </div>
+        </div>
+
+        <div id="map" class="map-canvas" aria-label="Schematic map of level 1">
+          <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
+          <div class="map-wing wing-north"><span>CARE WING</span></div>
+          <div class="map-wing wing-east"><span>OUTPATIENT</span></div>
+          <div class="map-wing wing-south"><span>IMAGING</span></div>
+          <div class="map-wing wing-west"><span>MAIN LOBBY</span></div>
+          <div class="map-corridor corridor-horizontal"></div>
+          <div class="map-corridor corridor-vertical"></div>
+          <div class="map-node node-lobby">LOBBY</div>
+          <div class="map-node node-elevators">ELEVATORS</div>
+          <div class="map-node node-info">INFO DESK</div>
+          <div id="room-marker" class="room-marker" hidden><span class="marker-pulse"></span><span class="marker-label"></span></div>
+          <div class="map-scale"><span></span> Schematic map · Not to scale</div>
+        </div>
+
+        <div id="selection-panel" class="selection-panel" aria-live="polite">
+          <div class="selection-icon" aria-hidden="true">+</div>
+          <div class="selection-copy">
+            <p class="selection-label">SELECT A DESTINATION</p>
+            <p id="selection-name" class="selection-name">Choose a room from the list</p>
+            <p id="selection-detail" class="selection-detail">Its location will appear on the floor map.</p>
+          </div>
+          <span id="selection-room" class="room-tag" hidden></span>
+        </div>
+      </section>
+    </section>
+    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask any team member for help finding your way.</span></footer>
+  </main>
+</body>
+</html>
