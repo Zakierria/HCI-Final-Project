@@ -75,7 +75,7 @@ document.querySelector('#checkin-button').addEventListener('click', () => {
   renderStep();
   checkinScreen.hidden = true;
   directionsScreen.hidden = false;
-  nextStepButton.focus();
+  stepTitle.focus();
 });
 
 previousStepButton.addEventListener('click', () => {

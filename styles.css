@@ -139,7 +139,7 @@ h1 { margin: 8px 0 7px; font: 800 36px/1.15 'DM Sans', 'Segoe UI', sans-serif; l
 .page-footer span:first-child { color: #6d7b74; font-weight: 650; }
 
 .journey-screen { padding: 30px 34px 26px; }
-.journey-screen[hidden], #directions-screen[hidden] { display: none; }
+.journey-screen[hidden], #directions-screen[hidden], #checkin-screen[hidden] { display: none; }
 .home-screen h2, .screen-heading h2, .arrival-screen h2 { margin: 8px 0 8px; font-size: 21px; font-weight: 750; }
 .screen-description { margin: 0; color: #687670; font-size: 13px; line-height: 1.65; }
 .home-choice {
