@@ -11,86 +11,93 @@
 <body>
   <header class="topbar">
     <a class="brand" href="#main" aria-label="WayPoint | PathFinder">
-      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-mark" aria-hidden="true">W</span>
       <span class="brand-name">WayPoint <span>PathFinder</span></span>
     </a>
     <div class="topbar-note"><span class="status-dot" aria-hidden="true"></span> Patient & visitor guide</div>
   </header>
 
   <main id="main" class="page-shell">
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">WAYFINDING <span> / </span> MAIN Screen</p>
-      <h1 id="page-title">Find a room</h1>
-      <p class="intro-copy">Search for a department, care team, or room number.</p>
+    <section id="login-screen" class="screen login-screen" aria-labelledby="login-title">
+      <p class="eyebrow">WAYPOINT PATHFINDER</p>
+      <h1 id="login-title" tabindex="-1">Find your way</h1>
+      <p class="intro-copy">Sign in as a visitor to see hospital directions.</p>
+
+      <form id="login-form" class="login-form">
+        <label for="visitor-name">Your name</label>
+        <input id="visitor-name" name="visitor-name" type="text" autocomplete="name" maxlength="50" required>
+        <button class="primary-button" type="submit">Continue</button>
+        <p class="prototype-note">Demo sign-in only. Your name is not saved or sent anywhere.</p>
+      </form>
     </section>
 
-    <section class="locator" aria-label="Hospital room locator">
-      <aside class="search-panel" aria-label="Search destinations">
-        <form class="search-form" role="search" onsubmit="return false">
-          <label for="destination-search">Destination</label>
-          <div class="search-box">
-            <span class="search-symbol" aria-hidden="true"></span>
-            <input id="destination-search" type="search" placeholder="Try ‘Cardiology’ or ‘214’" autocomplete="off">
-            <button id="clear-search" class="clear-search" type="button" aria-label="Clear search" hidden>&times;</button>
+    <section id="home-screen" class="screen home-screen" aria-labelledby="home-title" hidden>
+      <div class="screen-heading">
+        <div>
+          <p class="eyebrow">MAIN CAMPUS</p>
+          <h1 id="home-title" tabindex="-1">Welcome</h1>
+          <p class="intro-copy">Choose a department to see where to go.</p>
+        </div>
+        <button id="sign-out" class="text-button" type="button">Sign out</button>
+      </div>
+
+      <div class="home-grid">
+        <section class="departments-section" aria-labelledby="departments-title">
+          <h2 id="departments-title">Departments</h2>
+          <div class="department-list">
+            <button id="radiology-button" class="department-row" type="button">
+              <span><strong>Radiology</strong><small>Imaging and X-ray</small></span>
+              <span class="department-detail">Level 2 <b aria-hidden="true">→</b></span>
+            </button>
+            <div class="department-row">
+              <span><strong>Cardiology</strong><small>Heart and vascular care</small></span>
+              <span class="department-detail">Level 3</span>
+            </div>
+            <div class="department-row">
+              <span><strong>Pharmacy</strong><small>Prescription pickup</small></span>
+              <span class="department-detail">Level 1</span>
+            </div>
+            <div class="department-row">
+              <span><strong>Emergency</strong><small>Emergency department</small></span>
+              <span class="department-detail">Level 1</span>
+            </div>
           </div>
-        </form>
+        </section>
 
-        <div class="filter-row">
-          <label for="department-filter">Department</label>
-          <select id="department-filter" aria-label="Filter by department">
-            <option value="all">All departments</option>
-          </select>
-        </div>
-
-        <div class="results-heading">
-          <h2>Destinations</h2>
-          <span id="result-count" class="result-count" aria-live="polite"></span>
-        </div>
-        <div id="destination-list" class="destination-list"></div>
-        <p id="empty-state" class="empty-state" hidden>No destinations match. Try another search.</p>
-        <p class="help-note"><span aria-hidden="true">i</span> For urgent assistance, please ask a staff member.</p>
-      </aside>
-
-      <section class="map-panel" aria-label="Floor map">
-        <div class="map-toolbar">
-          <div>
-            <p class="map-kicker">WAYPOINT PATHFINDER</p>
-            <h2 id="map-title">Level 1 <span>·</span> Main lobby</h2>
+        <aside class="instructions-panel" aria-labelledby="instructions-title">
+          <h2 id="instructions-title">Before you go</h2>
+          <p>Check in at the information desk if you need help. Follow the signs for your department.</p>
+          <label class="accessibility-option" for="no-stairs">
+            <input id="no-stairs" type="checkbox">
+            <span><strong>No stairs</strong><small>Show step-free directions using elevators</small></span>
+          </label>
+          <div class="route-preview" aria-live="polite">
+            <span class="route-preview-label">RADIOLOGY ROUTE</span>
+            <p id="route-preview">Main Lobby → stairs → Level 2 → Radiology</p>
           </div>
-          <div class="floor-switch" role="group" aria-label="Choose floor">
-            <button type="button" data-floor="1" aria-pressed="true">1</button>
-            <button type="button" data-floor="2" aria-pressed="false">2</button>
-            <button type="button" data-floor="3" aria-pressed="false">3</button>
-          </div>
-        </div>
-
-        <div id="map" class="map-canvas" aria-label="Schematic map of level 1">
-          <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
-          <div class="map-wing wing-north"><span>CARE WING</span></div>
-          <div class="map-wing wing-east"><span>OUTPATIENT</span></div>
-          <div class="map-wing wing-south"><span>IMAGING</span></div>
-          <div class="map-wing wing-west"><span>MAIN LOBBY</span></div>
-          <div class="map-corridor corridor-horizontal"></div>
-          <div class="map-corridor corridor-vertical"></div>
-          <div class="map-node node-lobby">LOBBY</div>
-          <div class="map-node node-elevators">ELEVATORS</div>
-          <div class="map-node node-info">INFO DESK</div>
-          <div id="room-marker" class="room-marker" hidden><span class="marker-pulse"></span><span class="marker-label"></span></div>
-          <div class="map-scale"><span></span> Schematic map · Not to scale</div>
-        </div>
-
-        <div id="selection-panel" class="selection-panel" aria-live="polite">
-          <div class="selection-icon" aria-hidden="true">+</div>
-          <div class="selection-copy">
-            <p class="selection-label">SELECT A DESTINATION</p>
-            <p id="selection-name" class="selection-name">Choose a room from the list</p>
-            <p id="selection-detail" class="selection-detail">Its location will appear on the floor map.</p>
-          </div>
-          <span id="selection-room" class="room-tag" hidden></span>
-        </div>
+          <button id="directions-button" class="primary-button" type="button">Directions to Radiology</button>
+        </aside>
       </section>
+
+      <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask a staff member if you need assistance.</span></footer>
     </section>
-    <footer class="page-footer"><span>WayPoint PathFinder</span><span>Ask any team member for help finding your way.</span></footer>
+
+    <section id="directions-screen" class="screen directions-screen" aria-labelledby="directions-title" hidden>
+      <button id="back-button" class="text-button back-button" type="button"><span aria-hidden="true">←</span> Departments</button>
+      <p class="eyebrow">DIRECTIONS <span>/</span> MAIN CAMPUS</p>
+      <h1 id="directions-title" tabindex="-1">Radiology</h1>
+      <p class="intro-copy">From the main lobby to Radiology check-in, room R214.</p>
+
+      <div class="route-summary">
+        <div><span class="route-summary-label">START</span><strong>Main lobby</strong></div>
+        <span class="route-arrow" aria-hidden="true">→</span>
+        <div><span class="route-summary-label">DESTINATION</span><strong>Level 2 · Room R214</strong></div>
+      </div>
+
+      <h2 class="steps-title">Follow these directions</h2>
+      <ol id="route-steps" class="route-steps" aria-live="polite"></ol>
+      <p class="route-reminder">This is a sample route. Follow posted hospital signs or ask staff if you need help.</p>
+    </section>
   </main>
 </body>
 </html>
