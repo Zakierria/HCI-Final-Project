@@ -309,7 +309,7 @@ body {
 
 .page-shell {
   width: min(100% - 40px, 1040px);
-  padding-top: 40px;
+  padding-top:  40px;
 }
 
 .screen h1 {
