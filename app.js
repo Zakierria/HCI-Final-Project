@@ -1,15 +1,44 @@
 const routeSteps = [
   {
     title: 'Take a right and get on the elevator to floor 3.',
-    description: 'Follow the signs for the elevators and select Level 3.'
+    description: 'Follow the signs for the elevators and select Level 3.',
+    landmark: 'Elevator bank and its floor indicator',
+    photos: [
+      {
+        src: 'images/elevator-img.jpg',
+        alt: 'Open hospital elevator with floor buttons and nearby wayfinding signs',
+        caption: 'Look for this elevator bank in the main lobby.'
+      }
+    ]
   },
   {
     title: 'Take a left.',
-    description: 'When you exit the elevator on Level 3, turn left and continue down the hallway.'
+    description: 'When you exit the elevator on Level 3, turn left and continue down the hallway.',
+    landmark: 'Level 3 marker beside the elevator doors',
+    photos: [
+      {
+        src: 'images/floor_3.png.1400x1400.png',
+        alt: 'Elevator bank on Level 3, marked by a large number 3 on the wall',
+        caption: 'Look for the large Level 3 marker beside the elevators.'
+      }
+    ]
   },
   {
     title: 'Take a right.',
-    description: 'Turn right at the end of the hallway. The Neurology front desk is just ahead.'
+    description: 'Turn right at the end of the hallway. The Neurology front desk is just ahead.',
+    landmark: 'Neurology sign, Room 326, and the reception desk',
+    photos: [
+      {
+        src: 'images/blue-neurology-sign-arrow-hospital-260nw-2683712729.webp',
+        alt: 'Blue Neurology sign with an arrow pointing right',
+        caption: 'Follow the Neurology arrow sign.'
+      },
+      {
+        src: 'images/ML_WaitingRoomChairs_blog_featured.jpg',
+        alt: 'Seating in a hospital waiting room beside a reception counter',
+        caption: 'Look for the reception area and waiting chairs near Neurology.'
+      }
+    ]
   }
 ];
 
@@ -27,6 +56,8 @@ const progressFill = document.querySelector('#progress-fill');
 const stepNumber = document.querySelector('#step-number');
 const stepTitle = document.querySelector('#step-title');
 const stepDescription = document.querySelector('#step-description');
+const stepLandmark = document.querySelector('#step-landmark');
+const landmarkPhotos = document.querySelector('#landmark-photos');
 const previousStepButton = document.querySelector('#previous-step');
 const nextStepButton = document.querySelector('#next-step');
 let currentStep = 0;
@@ -46,6 +77,23 @@ function renderStep() {
   stepNumber.textContent = String(currentStep + 1).padStart(2, '0');
   stepTitle.textContent = step.title;
   stepDescription.textContent = step.description;
+  stepLandmark.textContent = step.landmark;
+  landmarkPhotos.replaceChildren();
+  step.photos.forEach((photo) => {
+    const figure = document.createElement('figure');
+    figure.className = 'landmark-photo';
+
+    const image = document.createElement('img');
+    image.src = photo.src;
+    image.alt = photo.alt;
+
+    const caption = document.createElement('figcaption');
+    caption.textContent = photo.caption;
+
+    figure.append(image, caption);
+    landmarkPhotos.append(figure);
+  });
+  landmarkPhotos.hidden = step.photos.length === 0;
   previousStepButton.disabled = currentStep === 0;
   nextStepButton.innerHTML = currentStep === routeSteps.length - 1
     ? "I'm here"
